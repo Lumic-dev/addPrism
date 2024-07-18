@@ -8,7 +8,13 @@ const findPw = async (data) => {
         if (!handleConnectionError(res.data)) {
             return;
         }
-        success(res.data);
+        console.log(res.data);
+        if (res.data === "ok") {
+            alert("임시 비밀번호가 메일로 전송되었습니다.");
+            window.location.replace("/user/login");
+        } else {
+            alert("해당하는 정보를 찾을 수 없습니다.");
+        }
     } catch (error) {
         handleApiError(error);
     }
