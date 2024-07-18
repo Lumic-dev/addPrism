@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { login } from "api/login";
 
-import loginCheck from 'utils/loginCheck';
-import LoginInput from 'components/input/Input';
+import loginCheck from "utils/loginCheck";
+import LoginInput from "components/input/Input";
 
-import * as Style from "assets/styleComponent/login/login"
+import * as Style from "assets/styleComponent/login/login";
 
 const Login = () => {
     const nav = useNavigate();
@@ -18,7 +18,7 @@ const Login = () => {
         e.preventDefault();
         const data = {
             id: id,
-            pw: password
+            pw: password,
         };
 
         const loginChek = await login(data);
@@ -52,11 +52,40 @@ const Login = () => {
     return (
         <>
             <Style.Form onSubmit={onSubmit}>
-                <div>
+                <div className="form-box">
                     <h1>로그인</h1>
-                    <LoginInput type="text" name='id' placeholder='아이디' onChange={onChange}></LoginInput>
-                    <LoginInput type="password" name='password' placeholder='비밀번호' onChange={onChange}></LoginInput>
-                    <input type="submit" value="로그인하기" />
+                    <LoginInput
+                        type="text"
+                        name="id"
+                        placeholder="아이디"
+                        onChange={onChange}
+                    ></LoginInput>
+                    <LoginInput
+                        type="password"
+                        name="password"
+                        placeholder="비밀번호"
+                        onChange={onChange}
+                    ></LoginInput>
+                    <input type="submit" value="로그인" />
+                    <div className="find-info-box">
+                        <span
+                            className="link"
+                            onClick={() => {
+                                nav("/user/findId");
+                            }}
+                        >
+                            아이디 찾기
+                        </span>
+                        <span>|</span>
+                        <span
+                            className="link"
+                            onClick={() => {
+                                nav("/user/findPw");
+                            }}
+                        >
+                            비밀번호 찾기
+                        </span>
+                    </div>
                 </div>
             </Style.Form>
         </>

@@ -6,7 +6,7 @@ export const Form = styled.form`
     align-items: center;
     min-height: 70vh;
     padding: 50px 0px;
-    div{
+    .form-box {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -14,20 +14,20 @@ export const Form = styled.form`
         gap: 5px;
         border: 1px solid #ddd;
         border-radius: 15px;
-        padding: 50px 15px;
+        padding: 40px 15px 40px 15px;
     }
 
-    h1{
+    h1 {
         font-size: 20px;
         margin-bottom: 20px;
     }
 
-    input{
+    input {
         width: 320px;
         line-height: 24px;
     }
 
-    input[type="submit"]{
+    input[type="submit"] {
         border: none;
         background-color: #444;
         color: #fff;
@@ -35,5 +35,15 @@ export const Form = styled.form`
         padding: 5px;
         cursor: pointer;
         margin-top: 20px;
-    };
-`
+    }
+    .find-info-box {
+        padding-top: 20px;
+        span {
+            padding: 0px 10px;
+            cursor: default;
+        }
+        .link {
+            cursor: pointer;
+        }
+    }
+`;

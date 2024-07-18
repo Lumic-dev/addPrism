@@ -25,34 +25,47 @@ const handleApiError = async (error) => {
 // 통신 성공했는데 에러 터짐
 const handleConnectionError = (res) => {
     if (res.error === "E00") {
-        handleTokenError("올바르지 않은 토큰값 로그아웃 됩니다.\n error code : E00");
+        handleTokenError(
+            "올바르지 않은 토큰값 로그아웃 됩니다.\n error code : E00"
+        );
         return false;
     } else if (res.error === "E01") {
         handleTokenError("액세스 토큰 만료. \n error code : E01");
         return false;
     } else if (res.error === "E02") {
-        handleTokenError("다른 브라우저에서 로그인을 시도하여 로그아웃 됩니다. \n error code : E02");
+        handleTokenError(
+            "다른 브라우저에서 로그인을 시도하여 로그아웃 됩니다. \n error code : E02"
+        );
         return false;
     } else if (res.error === "E03") {
         handleTokenError("리프레시 토큰 만료. \n error code : E03");
         return false;
     } else if (res.error === "E05") {
-        handleTokenError("토큰값이 일치하지 않습니다 로그아웃 됩니다. \n error code : E05");
+        handleTokenError(
+            "토큰값이 일치하지 않습니다 로그아웃 됩니다. \n error code : E05"
+        );
         return false;
     } else if (res.error === "E06") {
-        handleTokenError("다른 브라우저에서 로그인을 시도하여 로그아웃 됩니다. \n error code : E06");
+        handleTokenError(
+            "다른 브라우저에서 로그인을 시도하여 로그아웃 됩니다. \n error code : E06"
+        );
         return false;
     } else if (res.error === "E07") {
-        handleTokenError("알 수 없는 에러으로 로그아웃 됩니다. \n error code : E07");
+        handleTokenError(
+            "알 수 없는 에러으로 로그아웃 됩니다. \n error code : E07"
+        );
         return false;
     } else if (res.error === "E21") {
         errorMessage("결제 취소 실패했습니다. \n error code : E21", true);
         return false;
     } else if (res.error === "E22") {
-        errorMessage("사용 적립금이 가지고 있는 적립금을 초과했습니다. \n error code : E22", true);
+        errorMessage(
+            "사용 적립금이 가지고 있는 적립금을 초과했습니다. \n error code : E22",
+            true
+        );
         return false;
     } else if (res.error === "E23") {
-        localStorage.removeItem('basket');
+        localStorage.removeItem("basket");
         errorMessage("가격 정보가 다릅니다. \n error code : E23", true);
     } else if (res.error === "E11") {
         errorMessage("PDO 예외발생하였습니다. \n error code : E11", true);
@@ -75,7 +88,7 @@ const handleConnectionError = (res) => {
     }
 
     return true;
-}
+};
 
 // 토큰에러
 const handleTokenError = (msg) => {
@@ -83,7 +96,7 @@ const handleTokenError = (msg) => {
     sessionStorage.removeItem("userId");
     alert(msg);
     window.location.replace("/");
-}
+};
 
 // 에러 메세지
 const errorMessage = (msg, isErrorPage) => {
@@ -91,6 +104,6 @@ const errorMessage = (msg, isErrorPage) => {
     if (isErrorPage) {
         // window.location.replace("/error");
     }
-}
+};
 
 export { handleApiError, handleTokenError, handleConnectionError };
