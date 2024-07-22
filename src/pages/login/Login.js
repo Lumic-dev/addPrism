@@ -12,7 +12,7 @@ const Login = () => {
     const nav = useNavigate();
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
-    const link = `https://kauth.kakao.com/oauth/authorize?client_id=&redirect_uri=&response_type=code`;
+    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
 
     // 로그인 요청
     const onSubmit = async (e) => {

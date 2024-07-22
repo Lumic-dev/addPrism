@@ -15,5 +15,5 @@ export default function KakaoLogin() {
         const loginResult = kakaoLogin(codeData);
     }, []);
 
-    return <div>KakaoLogin</div>;
+    return <div></div>;
 }

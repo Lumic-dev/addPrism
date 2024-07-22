@@ -25,6 +25,10 @@ const kakaoLogin = async (data) => {
     try {
         const res = await axios.post("/user/kakao_login", data);
         console.log(res.data);
+        if (res.data.result === "success") {
+            window.localStorage.setItem("atoken", res.data.aToken);
+            window.location.replace("/");
+        }
     } catch (error) {
         handleApiError(error);
     }
