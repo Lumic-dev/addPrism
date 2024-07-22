@@ -22,7 +22,8 @@ const Register = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const phoneRegex = /^01([0|1|6|7|8|9])(\d{3}|\d{4})(\d{4})$/;
-        const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        const emailRegex =
+            /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
         if (name === "") {
             alert("이름 입력해주세요.");
@@ -47,7 +48,7 @@ const Register = () => {
         } else if (!emailRegex.test(eamil)) {
             alert("이메일 형식이 아닙니다.");
             return;
-        };
+        }
 
         const data = {
             name: name,
@@ -97,13 +98,38 @@ const Register = () => {
     return (
         <>
             <Style.Form onSubmit={onSubmit}>
-                <div>
+                <div className="form-box">
                     <h1>회원가입</h1>
-                    <Input type="text" name="name" onChange={onChange} placeholder="이름" />
-                    <Input type="text" name="id" onChange={onChange} placeholder="아이디" />
-                    <Input type="password" name="pw" onChange={onChange} placeholder="비밀번호" />
-                    <Input type="text" name="tell" onChange={onChange} placeholder="전화번호" />
-                    <Input type="text" name="email" onChange={onChange} placeholder="이메일" />
+                    <Input
+                        type="text"
+                        name="name"
+                        onChange={onChange}
+                        placeholder="이름"
+                    />
+                    <Input
+                        type="text"
+                        name="id"
+                        onChange={onChange}
+                        placeholder="아이디"
+                    />
+                    <Input
+                        type="password"
+                        name="pw"
+                        onChange={onChange}
+                        placeholder="비밀번호"
+                    />
+                    <Input
+                        type="text"
+                        name="tell"
+                        onChange={onChange}
+                        placeholder="전화번호"
+                    />
+                    <Input
+                        type="text"
+                        name="email"
+                        onChange={onChange}
+                        placeholder="이메일"
+                    />
                     {/* <Input type="text" name="address" onChange={onChange} placeholder="주소" /> */}
                     <input type="submit" value="회원가입" />
                 </div>

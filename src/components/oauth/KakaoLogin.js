@@ -13,8 +13,7 @@ export default function KakaoLogin() {
             code: code,
         };
         const loginResult = kakaoLogin(codeData);
-        console.log(loginResult);
-    });
+    }, []);
 
     return <div>KakaoLogin</div>;
 }
