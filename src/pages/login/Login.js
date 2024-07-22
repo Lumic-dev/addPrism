@@ -12,6 +12,7 @@ const Login = () => {
     const nav = useNavigate();
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
+    const link = `https://kauth.kakao.com/oauth/authorize?client_id=2e6451f924d960d7b76cd07bbf0cd5fa&redirect_uri=http://localhost:3000/oauth/kakao/callback&response_type=code`;
 
     // 로그인 요청
     const onSubmit = async (e) => {
@@ -49,6 +50,10 @@ const Login = () => {
                 break;
         }
     };
+
+    const loginHandler = () => {
+        window.location.href = link;
+    };
     return (
         <>
             <Style.Form onSubmit={onSubmit}>
@@ -85,6 +90,8 @@ const Login = () => {
                         >
                             비밀번호 찾기
                         </span>
+                        <span>|</span>
+                        <span onClick={loginHandler}>카카오 로그인</span>
                     </div>
                 </div>
             </Style.Form>

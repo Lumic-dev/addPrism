@@ -15,13 +15,13 @@ import TossSuccess from "components/toss/TossSuccess";
 
 import Main from "pages/main/Main";
 import User from "routers/User";
-import Login from "pages/login/Login";
-import Register from "pages/login/Register";
+import Sounds from "pages/sound/Sounds";
 import Admin from "routers/Admin";
 import MyPage from "routers/MyPage";
 import Product from "./Product";
 import Order from "./Order";
 import Community from "./community/Community";
+import Oauth from "./Oauth";
 
 import "assets/css/common/common.css";
 
@@ -69,12 +69,7 @@ function App() {
                 <Route path="/admin/*" element={<Admin />} />
                 <Route path="/myPage/*" element={<MyPage />} />
                 <Route path="/user/*" element={<User />}></Route>
-
-                {/* <Route path="/login" element={<Login />} />
-                <Route path="/loginRegister" element={<Register />} />
-                <Route path="/helpId" element={<Register />} />
-                <Route path="/helpPw" element={<Register />} /> */}
-
+                <Route path="/sounds" element={<Sounds />}></Route>
                 <Route
                     path="/product/*"
                     element={<Product setOrderData={setOrderData} />}
@@ -92,7 +87,11 @@ function App() {
 
                 {/* 토스 데이터 전달용 */}
                 <Route path="/tossSuccess" element={<TossSuccess />} />
+
+                {/* 다른 인증 로그인 콜백 */}
+                <Route path="/oauth/*" element={<Oauth></Oauth>}></Route>
             </Routes>
+
             {header && <Footer></Footer>}
         </>
     );
