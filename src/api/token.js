@@ -1,20 +1,24 @@
-import axios from './axios';
-import { handleApiError, handleConnectionError, handleTokenError } from './handleError';
+import axios from "./axios";
+import {
+    handleApiError,
+    handleConnectionError,
+    handleTokenError,
+} from "./handleError";
 
 const getToken = () => {
-    return sessionStorage.getItem('token');
+    return sessionStorage.getItem("token");
 };
 
 const getUserId = () => {
-    return sessionStorage.getItem('userId');
+    return sessionStorage.getItem("userId");
 };
 
 const setUserId = (userId) => {
-    sessionStorage.setItem('userId', userId);
+    sessionStorage.setItem("userId", userId);
 };
 
 const setToken = (token) => {
-    sessionStorage.setItem('token', token);
+    sessionStorage.setItem("token", token);
 };
 
 const getHeaders = () => {
@@ -22,7 +26,7 @@ const getHeaders = () => {
 
     return {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     };
 };
 
@@ -35,7 +39,9 @@ const tokenCheck = async (success) => {
             const userId = getUserId();
             const headers = getHeaders();
 
-            const res = await axios.post('/user/checkToken', null, { headers: headers });
+            const res = await axios.post("/user/checkToken", null, {
+                headers: headers,
+            });
 
             if (!handleConnectionError(res.data)) {
                 return;
@@ -44,11 +50,13 @@ const tokenCheck = async (success) => {
             if (!userId) {
                 setUserId(res.data.id);
             } else {
-                if (res.data.res === 'renew') {
+                if (res.data.res === "renew") {
                     setToken(res.data.Atoken);
                     setUserId(res.data.id);
                 } else if (userId !== res.data.id) {
-                    handleTokenError('아이디값이랑 토큰값 불일치로 인해 로그아웃 됩니다.');
+                    handleTokenError(
+                        "아이디값이랑 토큰값 불일치로 인해 로그아웃 됩니다."
+                    );
                 }
             }
 

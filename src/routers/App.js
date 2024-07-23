@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import moment from 'moment/moment';
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import moment from "moment/moment";
 
-import { tokenCheck } from 'api/token';
-import { updateUserAccessCount } from 'api/user';
+import { tokenCheck } from "api/token";
+import { updateUserAccessCount } from "api/user";
 
-import Header from 'components/common/Header';
-import Footer from 'components/common/Footer';
-import Error from 'components/error/Error';
-import NotFoundPage from 'components/error/NotFoundPage';
-import Close from 'components/inicis/Close';
-import TossSuccess from 'components/toss/TossSuccess';
+import Header from "components/common/Header";
+import Footer from "components/common/Footer";
+import Error from "components/error/Error";
+import NotFoundPage from "components/error/NotFoundPage";
+import Close from "components/inicis/Close";
+import TossSuccess from "components/toss/TossSuccess";
 
-import Main from 'pages/main/Main';
-import Login from 'pages/login/Login';
-import Register from 'pages/login/Register';
-import Admin from 'routers/Admin';
-import MyPage from 'routers/MyPage';
-import Product from './Product';
-import Order from './Order';
-import Community from './community/Community';
+import Main from "pages/main/Main";
+import User from "routers/User";
+import Sounds from "pages/sound/Sounds";
+import Admin from "routers/Admin";
+import MyPage from "routers/MyPage";
+import Product from "./Product";
+import Order from "./Order";
+import Community from "./community/Community";
+import Oauth from "./Oauth";
 
-import 'assets/css/common/common.css';
+import "assets/css/common/common.css";
 
 function App() {
     const nav = useNavigate();
@@ -33,10 +34,10 @@ function App() {
     const [cookies, setCookies] = useCookies();
     // 방문자 체크
     const accessCheck = async () => {
-        const expires = moment().add('10', 'm').toDate();
-        if (cookies.userCount !== 'true') {
-            setCookies('userCount', true, { expires });
-            updateUserAccessCount('나 등장~!');
+        const expires = moment().add("10", "m").toDate();
+        if (cookies.userCount !== "true") {
+            setCookies("userCount", true, { expires });
+            updateUserAccessCount("나 등장~!");
         }
     };
 
@@ -67,10 +68,16 @@ function App() {
                 <Route path="/" element={<Main />} />
                 <Route path="/admin/*" element={<Admin />} />
                 <Route path="/myPage/*" element={<MyPage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/loginRegister" element={<Register />} />
-                <Route path="/product/*" element={<Product setOrderData={setOrderData} />} />
-                <Route path="/order/*" element={<Order orderData={orderData} />} />
+                <Route path="/user/*" element={<User />}></Route>
+                <Route path="/sounds" element={<Sounds />}></Route>
+                <Route
+                    path="/product/*"
+                    element={<Product setOrderData={setOrderData} />}
+                />
+                <Route
+                    path="/order/*"
+                    element={<Order orderData={orderData} />}
+                />
                 <Route path="/close" element={<Close />} />
                 <Route path="/community/*" element={<Community />} />
 
@@ -80,7 +87,11 @@ function App() {
 
                 {/* 토스 데이터 전달용 */}
                 <Route path="/tossSuccess" element={<TossSuccess />} />
+
+                {/* 다른 인증 로그인 콜백 */}
+                <Route path="/oauth/*" element={<Oauth></Oauth>}></Route>
             </Routes>
+
             {header && <Footer></Footer>}
         </>
     );
