@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function FindId() {
-    return <div>커밋용</div>;
+    return <div>테스트</div>;
 }
