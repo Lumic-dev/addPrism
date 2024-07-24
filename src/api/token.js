@@ -6,7 +6,19 @@ import {
 } from "./handleError";
 
 const getToken = () => {
-    return sessionStorage.getItem("token");
+    if (sessionStorage.getItem("localToken") != "") {
+        let tokenData = {
+            type: "local",
+            token: sessionStorage.getItem("localToken"),
+        };
+        return tokenData;
+    } else if (sessionStorage.getItem("kakaoToken") != "") {
+        let tokenData = {
+            type: "kakao",
+            token: sessionStorage.getItem("kakaoToken"),
+        };
+        return tokenData;
+    }
 };
 
 const getUserId = () => {
@@ -17,15 +29,15 @@ const setUserId = (userId) => {
     sessionStorage.setItem("userId", userId);
 };
 
-const setToken = (token) => {
-    sessionStorage.setItem("token", token);
+const setLocalToken = (token) => {
+    sessionStorage.setItem("localToken", token);
 };
 
 const getHeaders = () => {
     const token = getToken();
 
     return {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token.token}`,
         "Content-Type": "application/json",
     };
 };
@@ -33,9 +45,9 @@ const getHeaders = () => {
 // 토큰체크
 const tokenCheck = async (success) => {
     try {
-        const token = getToken();
+        const tokenData = getToken();
 
-        if (token) {
+        if (tokenData.type == "local") {
             const userId = getUserId();
             const headers = getHeaders();
 
@@ -51,7 +63,7 @@ const tokenCheck = async (success) => {
                 setUserId(res.data.id);
             } else {
                 if (res.data.res === "renew") {
-                    setToken(res.data.Atoken);
+                    setLocalToken(res.data.Atoken);
                     setUserId(res.data.id);
                 } else if (userId !== res.data.id) {
                     handleTokenError(
@@ -59,8 +71,8 @@ const tokenCheck = async (success) => {
                     );
                 }
             }
-
             success(res.data);
+        } else if (token.type == "kakao") {
         }
     } catch (error) {
         handleApiError(error);

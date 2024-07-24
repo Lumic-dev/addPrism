@@ -92,7 +92,8 @@ const handleConnectionError = (res) => {
 
 // 토큰에러
 const handleTokenError = (msg) => {
-    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("localToken");
+    sessionStorage.removeItem("kakaoToken");
     sessionStorage.removeItem("userId");
     alert(msg);
     window.location.replace("/");
