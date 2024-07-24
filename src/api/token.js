@@ -1,41 +1,59 @@
-import axios from './axios';
-import { handleApiError, handleConnectionError, handleTokenError } from './handleError';
+import axios from "./axios";
+import {
+    handleApiError,
+    handleConnectionError,
+    handleTokenError,
+} from "./handleError";
 
 const getToken = () => {
-    return sessionStorage.getItem('token');
+    if (sessionStorage.getItem("localToken") != "") {
+        let tokenData = {
+            type: "local",
+            token: sessionStorage.getItem("localToken"),
+        };
+        return tokenData;
+    } else if (sessionStorage.getItem("kakaoToken") != "") {
+        let tokenData = {
+            type: "kakao",
+            token: sessionStorage.getItem("kakaoToken"),
+        };
+        return tokenData;
+    }
 };
 
 const getUserId = () => {
-    return sessionStorage.getItem('userId');
+    return sessionStorage.getItem("userId");
 };
 
 const setUserId = (userId) => {
-    sessionStorage.setItem('userId', userId);
+    sessionStorage.setItem("userId", userId);
 };
 
-const setToken = (token) => {
-    sessionStorage.setItem('token', token);
+const setLocalToken = (token) => {
+    sessionStorage.setItem("localToken", token);
 };
 
 const getHeaders = () => {
     const token = getToken();
 
     return {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.token}`,
+        "Content-Type": "application/json",
     };
 };
 
 // 토큰체크
 const tokenCheck = async (success) => {
     try {
-        const token = getToken();
+        const tokenData = getToken();
 
-        if (token) {
+        if (tokenData.type == "local") {
             const userId = getUserId();
             const headers = getHeaders();
 
-            const res = await axios.post('/user/checkToken', null, { headers: headers });
+            const res = await axios.post("/user/checkToken", null, {
+                headers: headers,
+            });
 
             if (!handleConnectionError(res.data)) {
                 return;
@@ -44,15 +62,17 @@ const tokenCheck = async (success) => {
             if (!userId) {
                 setUserId(res.data.id);
             } else {
-                if (res.data.res === 'renew') {
-                    setToken(res.data.Atoken);
+                if (res.data.res === "renew") {
+                    setLocalToken(res.data.Atoken);
                     setUserId(res.data.id);
                 } else if (userId !== res.data.id) {
-                    handleTokenError('아이디값이랑 토큰값 불일치로 인해 로그아웃 됩니다.');
+                    handleTokenError(
+                        "아이디값이랑 토큰값 불일치로 인해 로그아웃 됩니다."
+                    );
                 }
             }
-
             success(res.data);
+        } else if (token.type == "kakao") {
         }
     } catch (error) {
         handleApiError(error);

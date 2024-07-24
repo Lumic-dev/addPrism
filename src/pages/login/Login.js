@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { login } from "api/login";
 
@@ -7,7 +7,7 @@ import loginCheck from 'utils/loginCheck';
 import LoginInput from 'components/input/Input';
 import GoogleLoginButton from 'components/login/GoogleLoginButton';
 
-import * as Style from "assets/styleComponent/login/login"
+import * as Style from "assets/styleComponent/login/login";
 
 
 
@@ -15,13 +15,14 @@ const Login = () => {
     const nav = useNavigate();
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
+    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
 
     // 로그인 요청
     const onSubmit = async (e) => {
         e.preventDefault();
         const data = {
             id: id,
-            pw: password
+            pw: password,
         };
 
         const loginChek = await login(data);
@@ -56,14 +57,49 @@ const Login = () => {
                 break;
         }
     };
+
+    const loginHandler = () => {
+        window.location.href = link;
+    };
     return (
         <>
             <Style.Form onSubmit={onSubmit}>
-                <div>
+                <div className="form-box">
                     <h1>로그인</h1>
-                    <LoginInput type="text" name='id' placeholder='아이디' onChange={onChange}></LoginInput>
-                    <LoginInput type="password" name='password' placeholder='비밀번호' onChange={onChange}></LoginInput>
-                    <input type="submit" value="로그인하기" />
+                    <LoginInput
+                        type="text"
+                        name="id"
+                        placeholder="아이디"
+                        onChange={onChange}
+                    ></LoginInput>
+                    <LoginInput
+                        type="password"
+                        name="password"
+                        placeholder="비밀번호"
+                        onChange={onChange}
+                    ></LoginInput>
+                    <input type="submit" value="로그인" />
+                    <div className="find-info-box">
+                        <span
+                            className="link"
+                            onClick={() => {
+                                nav("/user/findId");
+                            }}
+                        >
+                            아이디 찾기
+                        </span>
+                        <span>|</span>
+                        <span
+                            className="link"
+                            onClick={() => {
+                                nav("/user/findPw");
+                            }}
+                        >
+                            비밀번호 찾기
+                        </span>
+                        <span>|</span>
+                        <span onClick={loginHandler}>카카오 로그인</span>
+                    </div>
                 </div>
             </Style.Form>
             <GoogleLoginButton></GoogleLoginButton>

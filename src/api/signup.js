@@ -7,7 +7,7 @@ import { encrypt } from "utils/crypto";
 const signup = async (data) => {
     try {
         const encryptedData = encrypt(JSON.stringify(data));
-        const res = await axios.post("/user/ins_user", { encryptedData });
+        const res = await axios.post("/user/createUser", { encryptedData });
         if (!handleConnectionError(res.data)) {
             return;
         }
@@ -25,6 +25,6 @@ const signup = async (data) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
-export { signup }
+export { signup };
