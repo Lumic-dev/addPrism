@@ -12,7 +12,7 @@ const getUserAccessCount = async (success) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 방문 카운팅
 const updateUserAccessCount = async (data) => {
@@ -24,7 +24,7 @@ const updateUserAccessCount = async (data) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 정보 가져오기
 const getUserInfo = async (data) => {
@@ -37,7 +37,7 @@ const getUserInfo = async (data) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 리스트
 const getUserList = async (data, success) => {
@@ -50,7 +50,7 @@ const getUserList = async (data, success) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 정보 변경
 const updateUser = async (data) => {
@@ -59,7 +59,7 @@ const updateUser = async (data) => {
         if (!handleConnectionError(res.data)) {
             return;
         }
-        if (res.data.result[0] === 'fail') {
+        if (res.data.result[0] === "fail") {
             alert("비밀번호가 틀렸습니다.");
             window.location.replace("/myPage/info");
         } else {
@@ -69,7 +69,7 @@ const updateUser = async (data) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 삭제
 const deleteUser = async (data) => {
@@ -82,7 +82,7 @@ const deleteUser = async (data) => {
                 }
                 if (res.data === "success") {
                     alert("탈퇴완료");
-                    sessionStorage.removeItem("token");
+                    sessionStorage.removeItem("localToken");
                     sessionStorage.removeItem("userId");
                     window.location.replace("/");
                 } else {
@@ -106,7 +106,7 @@ const deleteUser = async (data) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 배송지 가져오기
 const getAddress = async (data, success) => {
@@ -119,7 +119,7 @@ const getAddress = async (data, success) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 배송지 추가
 const addAddress = async (data, success) => {
@@ -134,7 +134,7 @@ const addAddress = async (data, success) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 기본 배송지 가져오기
 const getDefaultAddress = async (data, success) => {
@@ -147,7 +147,7 @@ const getDefaultAddress = async (data, success) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 기본 배송지 설정
 const setDefaultAddress = async (data) => {
@@ -161,7 +161,7 @@ const setDefaultAddress = async (data) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원 배송지 삭제
 const deleteAddress = async (data) => {
@@ -177,7 +177,7 @@ const deleteAddress = async (data) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 회원이 구매한 상품 리스트
 const getBuyProduct = async (data, success) => {
@@ -190,17 +190,20 @@ const getBuyProduct = async (data, success) => {
     } catch (error) {
         handleApiError(error);
     }
-}
+};
 
 // 비밀번호 확인
 const passwordCheck = async (data, success) => {
     try {
-        const res = await axios.post('/user/check_pw', data);
+        const res = await axios.post("/user/checkUserPassword", data);
         if (!handleConnectionError(res.data)) {
             return;
         }
         if (data.delete === "delete") {
-            deleteUser({ user_id: sessionStorage.getItem("userId"), deleteReqType: "user" });
+            deleteUser({
+                user_id: sessionStorage.getItem("userId"),
+                deleteReqType: "user",
+            });
             return;
         }
         success(res.data);
@@ -218,9 +221,9 @@ const getUserPoint = async (data, success) => {
         }
         success(res.data[0].user_point);
     } catch (error) {
-        handleApiError(error)
+        handleApiError(error);
     }
-}
+};
 
 export {
     getUserAccessCount,
@@ -236,5 +239,5 @@ export {
     deleteAddress,
     getBuyProduct,
     passwordCheck,
-    getUserPoint
+    getUserPoint,
 };
