@@ -5,8 +5,11 @@ import { login } from "api/login";
 
 import loginCheck from 'utils/loginCheck';
 import LoginInput from 'components/input/Input';
+import GoogleLoginButton from 'components/login/GoogleLoginButton';
 
 import * as Style from "assets/styleComponent/login/login"
+
+
 
 const Login = () => {
     const nav = useNavigate();
@@ -27,6 +30,10 @@ const Login = () => {
             window.location.replace("/");
         }
     };
+
+    // 구글 로그인 요청
+
+
 
     // 로그인 되있으면 메인으로
     useEffect(() => {
@@ -59,6 +66,9 @@ const Login = () => {
                     <input type="submit" value="로그인하기" />
                 </div>
             </Style.Form>
+            <GoogleLoginButton></GoogleLoginButton>
+
+
         </>
     );
 };
