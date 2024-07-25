@@ -6,13 +6,16 @@ import {
 } from "./handleError";
 
 const getToken = () => {
-    if (sessionStorage.getItem("localToken") != "") {
+    console.log("로컬 토큰 : " + sessionStorage.getItem("localToken"));
+    console.log("카카오 토큰 : " + sessionStorage.getItem("kakaoToken"));
+
+    if (sessionStorage.getItem("localToken") !== null) {
         let tokenData = {
             type: "local",
             token: sessionStorage.getItem("localToken"),
         };
         return tokenData;
-    } else if (sessionStorage.getItem("kakaoToken") != "") {
+    } else if (sessionStorage.getItem("kakaoToken") !== null) {
         let tokenData = {
             type: "kakao",
             token: sessionStorage.getItem("kakaoToken"),
@@ -46,14 +49,18 @@ const getHeaders = () => {
 const tokenCheck = async (success) => {
     try {
         const tokenData = getToken();
-
+        console.log(tokenData.type);
         if (tokenData.type == "local") {
             const userId = getUserId();
             const headers = getHeaders();
 
-            const res = await axios.post("/user/checkToken", null, {
-                headers: headers,
-            });
+            const res = await axios.post(
+                "/user/checkToken",
+                { tokenType: tokenData.type },
+                {
+                    headers: headers,
+                }
+            );
 
             if (!handleConnectionError(res.data)) {
                 return;
@@ -72,7 +79,38 @@ const tokenCheck = async (success) => {
                 }
             }
             success(res.data);
-        } else if (token.type == "kakao") {
+        } else if (tokenData.type == "kakao") {
+            const userId = getUserId();
+            const headers = getHeaders();
+            console.log("카카오 토큰 " + headers);
+
+            const res = await axios.post(
+                "/user/checkToken",
+                { tokenType: tokenData.type },
+                {
+                    headers: headers,
+                }
+            );
+
+            if (!handleConnectionError(res.data)) {
+                return;
+            }
+
+            if (!userId) {
+                setUserId(res.data.id);
+            } else {
+                if (res.data.res === "renew") {
+                    setLocalToken(res.data.Atoken);
+                    setUserId(res.data.id);
+                } else if (userId !== res.data.id) {
+                    handleTokenError(
+                        "아이디값이랑 토큰값 불일치로 인해 로그아웃 됩니다."
+                    );
+                }
+            }
+            success(res.data);
+        } else {
+            console.log("삑남");
         }
     } catch (error) {
         handleApiError(error);
