@@ -24,7 +24,10 @@ const login = async (data) => {
 const googleLogin = async (data) => {
     try {
         const code = data.credential;
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}` + '/user/google_login_test', { code });
+        const res = await axios.post(
+            `${process.env.REACT_APP_API_URL}` + "/user/google_login_test",
+            { code }
+        );
         if (!handleConnectionError(res.data)) {
             return;
         }
@@ -47,6 +50,5 @@ const kakaoLogin = async (data) => {
         handleApiError(error);
     }
 };
-
 
 export { login, googleLogin, kakaoLogin };
