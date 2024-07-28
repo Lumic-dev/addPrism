@@ -9,6 +9,10 @@ export default function Oauth() {
                 path="/kakao/callback"
                 element={<KakaoLogin></KakaoLogin>}
             ></Route>
+            <Route
+                path="/google/callback"
+                element={<GoogleLogin></GoogleLogin>}
+            ></Route>
         </Routes>
     );
 }

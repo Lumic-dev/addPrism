@@ -3,8 +3,7 @@ import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { googleLogin } from "api/login";
 
 const GoogleLoginButton = () => {
-    const id = '990459561290-b7hlncolnfh5o8d0cqffrvpe5107lg6h.apps.googleusercontent.com';
-
+    const id = `${process.env.REACT_APP_GOOGLE_API_KEY}`;
     return (
         <GoogleOAuthProvider clientId={id}>
             <GoogleLogin

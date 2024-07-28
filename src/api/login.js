@@ -23,8 +23,8 @@ const login = async (data) => {
 // 구글 로그인
 const googleLogin = async (data) => {
     try {
-        const code = data.credential;
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}` + '/user/google_login_test', { code });
+        const credential = data.credential;
+        const res = await axios.post('/user/google_login_test', { credential });
         if (!handleConnectionError(res.data)) {
             return;
         }
