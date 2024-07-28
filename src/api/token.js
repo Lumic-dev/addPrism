@@ -18,6 +18,12 @@ const getToken = () => {
             token: sessionStorage.getItem("kakaoToken"),
         };
         return tokenData;
+    } else if (sessionStorage.getItem("googleToken") != "") {
+        let tokenData = {
+            type: "google",
+            token: sessionStorage.getItem("googleToken"),
+        };
+        return tokenData;
     }
 };
 
@@ -72,7 +78,8 @@ const tokenCheck = async (success) => {
                 }
             }
             success(res.data);
-        } else if (token.type == "kakao") {
+        } else if (tokenData.type == "kakao") {
+        } else if (tokenData.type == "google") {
         }
     } catch (error) {
         handleApiError(error);
