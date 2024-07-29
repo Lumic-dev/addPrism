@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from 'react-dom';
 import { useNavigate } from "react-router-dom";
 
 import { login } from "api/login";
@@ -6,7 +7,7 @@ import { login } from "api/login";
 import loginCheck from 'utils/loginCheck';
 import LoginInput from 'components/input/Input';
 import GoogleLoginButton from 'components/login/GoogleLoginButton';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import * as Style from "assets/styleComponent/login/login";
 
 
@@ -34,7 +35,7 @@ const Login = () => {
 
     // 구글 로그인 요청
 
-
+    const googleId = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
 
     // 로그인 되있으면 메인으로
     useEffect(() => {
@@ -102,8 +103,10 @@ const Login = () => {
                     </div>
                 </div>
             </Style.Form>
-            <GoogleLoginButton></GoogleLoginButton>
 
+            <GoogleOAuthProvider clientId={googleId}>
+                <GoogleLoginButton></GoogleLoginButton>
+            </GoogleOAuthProvider>
 
         </>
     );

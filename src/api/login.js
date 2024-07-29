@@ -23,18 +23,24 @@ const login = async (data) => {
 // 구글 로그인
 const googleLogin = async (data) => {
     try {
-        const code = data.credential;
-        const res = await axios.post(
-            `${process.env.REACT_APP_API_URL}` + "/user/google_login_test",
-            { code }
-        );
-        if (!handleConnectionError(res.data)) {
-            return;
-        }
-        console.log(res.data);
+        const accessToken = await axios.post(`${process.env.REACT_APP_GOOGLE_REDIRECT_URI}`, {
+            code: data
+        });
+        console.log(accessToken);
+        return accessToken;
     } catch (error) {
         handleApiError(error);
     }
+    // try {
+    //     const credential = data.credential;
+    //     const res = await axios.post('/user/google_login_test', { credential });
+    //     if (!handleConnectionError(res.data)) {
+    //         return;
+    //     }
+    //     console.log(res.data);
+    // } catch (error) {
+    //     handleApiError(error);
+    // }
 };
 //카카오 로그인
 const kakaoLogin = async (data) => {

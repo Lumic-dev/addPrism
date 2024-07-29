@@ -78,6 +78,8 @@ const tokenCheck = async (success) => {
                 }
             }
             success(res.data);
+        } else if (tokenData.type == "google") {
+
         } else {
             console.log("삑남");
         }
