@@ -22,7 +22,14 @@ const logout = async () => {
             handleApiError(error);
         }
     } else if (tokenData.type === "kakao") {
-        kakaoLogout(headers, tokenData);
+        try {
+            kakaoLogout(headers, tokenData);
+            sessionStorage.removeItem("userId");
+            sessionStorage.removeItem("kakaoToken");
+            window.location.replace("/");
+        } catch (error) {
+            handleApiError(error);
+        }
     }
 };
 
