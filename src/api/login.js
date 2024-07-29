@@ -23,7 +23,7 @@ const login = async (data) => {
 // 구글 로그인
 const googleLogin = async (data) => {
     try {
-        const accessToken = await axios.post('https://lumicserver.store/backend/user/google_login_test', {
+        const accessToken = await axios.post(`${process.env.REACT_APP_GOOGLE_REDIRECT_URI}`, {
             code: data
         });
         console.log(accessToken);
@@ -56,6 +56,5 @@ const kakaoLogin = async (data) => {
         handleApiError(error);
     }
 };
-
 
 export { login, googleLogin, kakaoLogin };

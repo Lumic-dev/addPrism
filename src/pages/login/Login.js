@@ -35,7 +35,7 @@ const Login = () => {
 
     // 구글 로그인 요청
 
-    const googleId = `${process.env.REACT_APP_GOOGLE_API_KEY}`;
+    const googleId = `${process.env.REACT_APP_GOOGLE_CLIENT_ID}`;
 
     // 로그인 되있으면 메인으로
     useEffect(() => {

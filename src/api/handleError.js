@@ -38,7 +38,10 @@ const handleConnectionError = (res) => {
         );
         return false;
     } else if (res.error === "E03") {
-        handleTokenError("리프레시 토큰 만료. \n error code : E03");
+        //리프레시 토큰 만료
+        handleTokenError(
+            "로그인 세션이 만료되었습니다. 로그아웃 됩니다. \n error code : E03"
+        );
         return false;
     } else if (res.error === "E05") {
         handleTokenError(
